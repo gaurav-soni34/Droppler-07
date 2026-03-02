@@ -6,7 +6,7 @@ import { ref, onValue } from "firebase/database";
 import { rtdb } from "./firebase";
 
 export function useWaterLogs() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<{ className: string; liters: number }[]>([]);
 
   useEffect(() => {
     const logsRef = ref(rtdb, "logs");
@@ -15,12 +15,17 @@ export function useWaterLogs() {
         const val = snapshot.val();
 
         // Convert nested logs into array for charts
-        const chartData: any[] = [];
-        Object.entries(val).forEach(([className, students]) => {
+        const chartData: { className: string; liters: number }[] = [];
+        Object.entries(val ?? {}).forEach(([className, studentsObj]) => {
           let totalLiters = 0;
-          Object.values(students as any).forEach((student: any) => {
-            Object.values(student as any).forEach((log: any) => {
-              totalLiters += log.liters;
+          if (typeof studentsObj !== "object" || studentsObj === null) return;
+          Object.values(studentsObj as Record<string, unknown>).forEach((studentObj) => {
+            if (typeof studentObj !== "object" || studentObj === null) return;
+            Object.values(studentObj as Record<string, unknown>).forEach((log) => {
+              if (!log || typeof log !== "object") return;
+              const maybe = log as Record<string, unknown>;
+              const liters = maybe["liters"];
+              if (typeof liters === "number") totalLiters += liters;
             });
           });
           chartData.push({

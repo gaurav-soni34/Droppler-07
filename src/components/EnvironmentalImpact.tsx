@@ -185,12 +185,17 @@ export default function EnvironmentalImpact() {
       const logs = snapshot.val();
       let total = 0;
 
-      Object.values(logs as any).forEach((students: any) => {
-        Object.values(students).forEach((student: any) => {
-          Object.values(student).forEach((log: any) => {
-            // only count positive liters = saved
-            if (log.liters > 0) {
-              total += log.liters;
+      // logs shape is: { className: { studentId: { logId: { liters: number, ... }}}}
+      Object.entries(logs ?? {}).forEach(([, classObj]) => {
+        if (typeof classObj !== "object" || classObj === null) return;
+        Object.values(classObj as Record<string, unknown>).forEach((studentObj) => {
+          if (typeof studentObj !== "object" || studentObj === null) return;
+          Object.values(studentObj as Record<string, unknown>).forEach((log) => {
+            if (!log || typeof log !== "object") return;
+            const maybe = log as Record<string, unknown>;
+            const liters = maybe["liters"];
+            if (typeof liters === "number" && liters > 0) {
+              total += liters;
             }
           });
         });

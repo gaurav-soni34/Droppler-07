@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-      "build": "next build && next-on-pages build",
+    "build": "next build && next-on-pages build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -39,6 +39,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
+    "next-on-pages": "^0.1.6",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.7",
     "typescript": "^5"

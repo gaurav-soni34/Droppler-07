@@ -26,7 +26,7 @@ const QRScansToday = () => {
         return;
       }
 
-      const logs = snapshot.val();
+  const logs = snapshot.val();
       const today = new Date();
       const startOfDay = new Date(
         today.getFullYear(),
@@ -36,10 +36,15 @@ const QRScansToday = () => {
       const endOfDay = startOfDay + 24 * 60 * 60 * 1000;
 
       let count = 0;
-      Object.values(logs as any).forEach((students: any) => {
-        Object.values(students).forEach((student: any) => {
-          Object.values(student).forEach((log: any) => {
-            if (log.timestamp >= startOfDay && log.timestamp < endOfDay) {
+      Object.entries(logs ?? {}).forEach(([, classObj]) => {
+        if (typeof classObj !== "object" || classObj === null) return;
+        Object.values(classObj as Record<string, unknown>).forEach((studentObj) => {
+          if (typeof studentObj !== "object" || studentObj === null) return;
+          Object.values(studentObj as Record<string, unknown>).forEach((log) => {
+            if (!log || typeof log !== "object") return;
+            const maybe = log as Record<string, unknown>;
+            const timestamp = maybe["timestamp"];
+            if (typeof timestamp === "number" && timestamp >= startOfDay && timestamp < endOfDay) {
               count++;
             }
           });

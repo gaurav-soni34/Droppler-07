@@ -1,6 +1,3 @@
-
-
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -9,7 +6,11 @@ import { rtdb } from "@/lib/firebase";
 import { ref, set } from "firebase/database";
 import { useTheme } from "next-themes";
 
-interface Student { id: string; name: string; className: string; }
+interface Student {
+  id: string;
+  name: string;
+  className: string;
+}
 
 // students array ...
 const students: Student[] = [
@@ -110,9 +111,8 @@ const students: Student[] = [
   { id: "1072", name: "Anjali Mehta", className: "12th" },
 ];
 
-
-const LOCAL_IP = "192.168.245.96";
-const PORT = 3000;
+// const LOCAL_IP = "10.125.186.96";
+// const PORT = 3000;
 
 export default function GenerateQRPage() {
   const [savedStudents, setSavedStudents] = useState<string[]>([]);
@@ -144,7 +144,8 @@ export default function GenerateQRPage() {
   const qrColor = currentTheme === "dark" ? "#ffffff" : "#000000"; // white in dark, black in light
   const textColor = currentTheme === "dark" ? "text-white" : "text-gray-900";
   const cardBg = currentTheme === "dark" ? "bg-gray-800" : "bg-white";
-  const shadowColor = currentTheme === "dark" ? "shadow-gray-700" : "shadow-gray-200";
+  const shadowColor =
+    currentTheme === "dark" ? "shadow-gray-700" : "shadow-gray-200";
   const qrBgColor = currentTheme === "dark" ? "#1f2937" : "#ffffff";
 
   return (
@@ -160,13 +161,20 @@ export default function GenerateQRPage() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {grouped[className].map((student) => {
-              const reportUrl = `http://${LOCAL_IP}:${PORT}/report?studentId=${student.id}`;
+              // const reportUrl = `http://${LOCAL_IP}:${PORT}/report?studentId=${student.id}`;
+
+              const appUrl =
+                process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
+              const reportUrl = `${appUrl}/report?studentId=${student.id}`;
               return (
                 <div
                   key={student.id}
                   className={`${cardBg} border rounded-lg p-4 shadow-md ${shadowColor} flex flex-col items-center w-full`}
                 >
-                  <h3 className={`font-semibold text-base mb-2 text-center ${textColor}`}>
+                  <h3
+                    className={`font-semibold text-base mb-2 text-center ${textColor}`}
+                  >
                     {student.name}
                   </h3>
                   <QRCode

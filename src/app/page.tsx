@@ -1,44 +1,4 @@
-// "use client";
 
-// import { useEffect } from "react";
-// import AppBarChart from "@/components/AppBarChart";
-// import AppPieChart from "@/components/AppPieChart";
-// import ChartArea from "@/components/ChartArea";
-
-// const Homepage = () => {
-//   // useEffect(() => {
-//   //   // ✅ Call Firebase test write once when page loads
-
-//   // }, []);
-
-//   return (
-//     <div className="p-4">
-//       {/* Test Button */}
-//       <div className="mb-6 flex justify-between items-center">
-//         <h1 className="text-2xl d">Droppler</h1>
-
-//       </div>
-
-//       {/* Dashboard Layout */}
-//       <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4">
-//         <div className="bg-primary-foreground p-4 rounded-lg lg:col-span-2 xl:col-span-1 2xl:col-span-2">
-//           <AppBarChart />
-//         </div>
-//         <div className="bg-primary-foreground p-4 rounded-lg">Test</div>
-//         <div className="bg-primary-foreground p-4 rounded-lg">
-//           <AppPieChart />
-//         </div>
-//         <div className="bg-primary-foreground p-4 rounded-lg">Test</div>
-//         <div className="bg-primary-foreground p-4 rounded-lg lg:col-span-2 xl:col-span-1 2xl:col-span-2">
-//           <ChartArea />
-//         </div>
-//         <div className="bg-primary-foreground p-4 rounded-lg">Test</div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Homepage;
 
 "use client";
 
